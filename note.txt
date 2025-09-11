@@ -1,0 +1,184 @@
+🔹 V8 engine
+--------------
+Role in Node.js:
+
+Compiles JavaScript into native machine code.
+
+Executes your application’s JavaScript code.
+
+Provides runtime environment for JavaScript features like Promise, async/await, JSON, etc.
+
+Key point:
+
+Think of V8 as the brain of Node.js — it runs your JS code.
+
+
+🔹 libuv
+------------
+
+What it is:
+
+A multi-platform support library focused on asynchronous I/O, Written in C.
+
+Role in Node.js:
+
+    Handles the event loop.
+
+    Provides non-blocking I/O via thread pool.
+
+    Deals with:
+
+        File system operations (fs)
+
+        Networking (sockets, DNS, HTTP, etc.)
+
+        Timers (setTimeout, setInterval)
+
+        Child processes
+
+Key point:
+
+Think of libuv as the heart + muscles of Node.js — it powers async operations and event-driven architecture.
+
+
+⚡ How they work together in Node.js:
+
+    # Your JS code runs inside V8.
+    # When JS calls something like fs.readFile() or setTimeout(), it’s handed off to libuv.
+    # libuv runs the operation asynchronously (in background threads or via OS).
+    # When the operation finishes, libuv pushes a callback back into the event loop.
+    # V8 executes the callback in your JavaScript code.
+
+
+✅ Analogy
+
+     # V8 = The interpreter/engineer → understands and runs JavaScript.
+
+    # libuv = The worker manager → handles all async tasks, file I/O, and networking.
+
+    # Without V8, Node.js wouldn’t run JavaScript.
+    # Without libuv, Node.js wouldn’t be asynchronous.
+
+
+Process, Thread, Thread Pool:
+---------------------------------
+
+🔹 1. Process:
+
+A process is an instance of a program running on your system.
+Each process has:
+    Its own memory space (heap, stack, data, code).
+    At least one thread (usually the main thread).
+Example:
+If you run node app.js, that starts one Node.js process.
+
+🔹 2. Thread( Single/Main Thread):
+
+A thread is the smallest unit of execution inside a process. OR It's sequence of instractions.
+
+Example:
+A browser process may have multiple threads:
+
+    # UI thread
+    # Network thread
+    # JS execution thread (V8)
+
+🔹 3. Thread Pool
+A thread pool is a group of pre-created threads that are reused to perform tasks.
+Instead of creating/destroying threads each time (expensive), tasks are queued, and threads pick them up.
+Examples of operations that go into libuv’s thread pool:
+    #File system operations (fs.readFile, fs.writeFile)
+    #DNS lookups (dns.lookup)
+    #Compression (zlib, crypto)
+    #Some networking tasks
+
+🔹 How They Relate in Node.js
+
+    #Process: The Node.js instance (node app.js).
+
+    #Main thread: Runs your JS code in V8 (single-threaded).
+
+    #Thread pool (libuv): Handles async tasks that V8 delegates.
+
+👉 Flow:
+
+#Your JS code (setTimeout, fs.readFile) runs in the main thread.
+
+#Async tasks (like file I/O) go to the libuv thread pool.
+
+#Once done, callbacks are pushed into the event loop.
+
+#The main thread picks them up and executes in V8.
+
+
+✅ Analogy
+
+#Process = A restaurant.
+
+#Threads = Waiters inside the restaurant.
+
+#Thread pool = A fixed team of waiters that serve tasks (customers) in rotation.
+
+
+
+👉 Working Flow of Nodejs Code:
+--------------------------------
+Initialize programm -> Executes "top-level" code -> require modules -> Registers events callback -> Starts Event loop -> Now event loop offloads heavy
+task(Blocking in nature like DB, files operations etc) to Thread Pool to avoid event block and perform asynchronously.
+
+
+
+👉  Event Loop:
+----------------
+JavaScript runs in one thread → it can only do one thing at a time.
+If you ask it to read a big file or wait 5 seconds, everything would freeze.
+The event loop + libuv solve this by delegating heavy/async tasks away, and only running callbacks when results are ready.
+
+🟢 How It Works (Simplified Steps)
+
+    Call stack: Runs your JS code line by line.
+
+    If it sees async stuff (setTimeout, fs.readFile), it gives it to libuv.
+
+    libuv does the work in the background.
+
+    When ready, it puts the callback into a queue.
+
+    The event loop checks:
+
+    "Is the stack empty?" → Yes → take next callback from the queue → run it.
+
+    Repeat forever 🔄
+
+    🟢 Example
+    console.log("A");
+
+    setTimeout(() => {
+    console.log("B");
+    }, 0);
+
+    console.log("C");
+
+    👉 Output:
+        A
+        C
+        B
+
+
+Why?
+
+    "A" → runs immediately.
+
+    setTimeout → goes to libuv → callback saved for later.
+
+    "C" → runs immediately.
+
+    Event loop comes back → runs "B".
+
+    Phase or Steps in Event Loop queue:
+        1.Expired Timer callback
+         setTimeout(()=>{ console.log('Timer Expired') });
+        2. I/O Polling ( looking for new i/o event to process and putting them into callback ) and callback.
+            i/o means networking, file accessing, Example: fs.readFile('file.txt',(e, d)=>{ console.log('File Rad!'); })
+        3. SetImmediate callback: specail timer, can be used to to processes callback immediately after the I/O Polling or execution phase.
+        4. Close callback: all close events are processes.
