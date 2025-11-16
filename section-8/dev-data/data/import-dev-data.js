@@ -1,17 +1,12 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Tour = require('./../../models/tourModel');
+const Tour = require('../../models/tourModel');
 
 dotenv.config({ path: './config.env' });
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
-
 mongoose
-  .connect(DB, {
+  .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
@@ -50,3 +45,4 @@ if (process.argv[2] === '--import') {
 } else if (process.argv[2] === '--delete') {
   deleteData();
 }
+// /home/nimap/My Projects/Nodejs/udemy/node-udemy-course/section-8/dev-data/data/import-dev-data.js

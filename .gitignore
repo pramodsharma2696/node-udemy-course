@@ -70,6 +70,6 @@ complete-node-bootcamp-master/4-natours/after-section-0{6,7,8,9,10,11,12,13}/con
 
 *.env
 
-# Ignore real config.env files for sections 6 and 7
-node-udemy-course/section-6/config.env
-node-udemy-course/section-7/config.env
+# Ignore any env file inside any section folder (section-1, section-2, section-99, etc)
+**/section-*/config.env
+**/section-*/*.env
