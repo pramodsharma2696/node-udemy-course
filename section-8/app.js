@@ -11,7 +11,7 @@ if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 app.use(express.json());
-
+app.set('query parser', 'extended');
 app.use(express.static(`${__dirname}/public`));
 
 // 2. ROUTES

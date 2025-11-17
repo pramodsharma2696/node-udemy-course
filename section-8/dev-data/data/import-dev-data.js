@@ -5,14 +5,14 @@ const Tour = require('../../models/tourModel');
 
 dotenv.config({ path: './config.env' });
 
-mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false
+//Connect Database
+mongoose.connect(process.env.DATABASE)
+  .then(() => {
+    console.log('Database Connected Successfully.');
   })
-  .then(() => console.log('DB connection successful!'));
-
+  .catch((err) => {
+    console.error('Database connection error:', err);
+  });
 // READ JSON FILE
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
@@ -45,4 +45,5 @@ if (process.argv[2] === '--import') {
 } else if (process.argv[2] === '--delete') {
   deleteData();
 }
-// /home/nimap/My Projects/Nodejs/udemy/node-udemy-course/section-8/dev-data/data/import-dev-data.js
+
+// node dev-data/data/import-dev-data.js --delete
