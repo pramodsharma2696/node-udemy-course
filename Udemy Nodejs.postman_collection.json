@@ -1,0 +1,506 @@
+{
+	"info": {
+		"_postman_id": "a5b06447-dc22-4cb8-8ca2-d3816bdad497",
+		"name": "Udemy Nodejs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41794689"
+	},
+	"item": [
+		{
+			"name": "section-8",
+			"item": [
+				{
+					"name": "Tours",
+					"item": [
+						{
+							"name": "Get All Tours",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									],
+									"query": [
+										{
+											"key": "difficulty",
+											"value": "easy",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "price[lt]",
+											"value": "1500",
+											"disabled": true
+										},
+										{
+											"key": "duration[gte]",
+											"value": "5",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "price,duration",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Tour",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours/6924f9f6e817d3aa603a54bc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"6924f9f6e817d3aa603a54bc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Tour",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Tour",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"The super secret Tour 3\",\n    \"duration\": 7,\n    \"secretTour\":true,\n    \"maxGroupSize\": 15,\n    \"difficulty\": \"medium\",\n    \"ratingsAverage\": 4.8,\n    \"ratingsQuantity\": 23,\n    \"price\": 497,\n    \"priceDiscount\":200,\n    \"summary\": \"test summary\",\n    \"description\": \"test description.\",\n    \"imageCover\": \"tour-2-cover.jpg\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Tour",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"The Test 1\",\n    \"duration\": 7,\n    \"maxGroupSize\": 15,\n    \"difficulty\": \"medium\",\n    \"ratingsAverage\": 4.8,\n    \"ratingsQuantity\": 23,\n    \"price\": 497,\n    \"summary\": \"Exploring the jaw-dropping US east coast by foot and by boat\",\n    \"description\": \"Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\",\n    \"imageCover\": \"tour-2-cover.jpg\",\n    \"images\": [\n        \"tour-2-1.jpg\",\n        \"tour-2-2.jpg\",\n        \"tour-2-3.jpg\"\n    ],\n    \"startDates\": [\n        \"2021-06-19,10:00\",\n        \"2021-07-20,10:00\",\n        \"2021-08-18,10:00\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter and Sort Tours",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours?difficulty=easy&&price[lt]=1500&duration[gte]=5&sort=price,duration",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									],
+									"query": [
+										{
+											"key": "difficulty",
+											"value": "easy"
+										},
+										{
+											"key": null,
+											"value": null
+										},
+										{
+											"key": "price[lt]",
+											"value": "1500"
+										},
+										{
+											"key": "duration[gte]",
+											"value": "5"
+										},
+										{
+											"key": "sort",
+											"value": "price,duration"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Limiting Fields / Columns",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours?fields=name,duration,difficulty,price,ratingsAverage",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "name,duration,difficulty,price,ratingsAverage"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours?page=2&limit=4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tour Stats",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours/tour-stats",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"tour-stats"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Monthly Plan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/tours/monthly-plan/2021",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"monthly-plan",
+										"2021"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Handle Unhandled Routes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v2/tours",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v2",
+										"tours"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Get All Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SignUP",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"jwt\", pm.response.json().token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"User 5\",\n    \"email\": \"email5@test.com\",\n    \"password\": \"password123\",\n    \"passwordConfirm\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}api/v1/users/signup",
+									"host": [
+										"{{URL}}api"
+									],
+									"path": [
+										"v1",
+										"users",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"email4@test.com\",\n    \"password\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}api/v1/users/login",
+									"host": [
+										"{{URL}}api"
+									],
+									"path": [
+										"v1",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "forgot Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"email1@test.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}api/v1/users/forgot-password",
+									"host": [
+										"{{URL}}api"
+									],
+									"path": [
+										"v1",
+										"users",
+										"forgot-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
