@@ -13,8 +13,18 @@ const signToken = id => {
     expiresIn: process.env.JWT_EXPIRES_IN
   });
 };
+
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
+    const cookieOptions = {
+      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+      httpOnly: true,        // cannot be accessed by JS (XSS protection)
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in prod
+      sameSite: 'lax'        // CSRF protection
+    };
+    res.cookie('jwt', token, cookieOptions);
+
+
     user.password = undefined;
     res.status(statusCode).json({
       status: 'success',
@@ -27,7 +37,9 @@ const createSendToken = (user, statusCode, res) => {
 
 exports.signup = catchAsync(async(req, res, next) => {
   const { name, email, password, passwordConfirm } = req.body;
-   const newUser = await User.create({name, email, password, passwordConfirm });
+  const allowedRoles = ['user', 'guide', 'lead-guide'];
+  const role = allowedRoles.includes(req.body.role) ? req.body.role : 'user';
+   const newUser = await User.create({name, email, password, passwordConfirm, role });
    createSendToken(newUser, 201, res);
 });
 
