@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+var validator = require('validator');
 
 const tourSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A tour must have a name'],
     unique: true,
-    trim: true
+    trim: true,
+    validate: [validator.isAlpha, 'Tour name must be string only']
   },
   slug: {
      type: String
@@ -35,7 +37,15 @@ const tourSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'A tour must have a price']
   },
-  priceDiscount: Number,
+  priceDiscount: {
+    type: Number,
+    validate: {
+      validator: function(val) {
+        return val < this.price;
+      },
+      message: 'Discount price ({VALUE}) must be less than actual price.'
+    }
+  },
   summary: {
     type: String,
     trim: true,
@@ -95,6 +105,14 @@ tourSchema.post(/^find/, function(doc, next){
 console.log(`Query took ${Date.now() - this.start} milliseconds.`);
   next();
 })
+
+//AGGREGATION MIDDLEWARE
+tourSchema.pre('aggregate', function(next){
+  this.pipeline().unshift({ $match : { secretTour : {$ne: true }}});
+  console.log(this.pipeline());
+  next();
+})
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;

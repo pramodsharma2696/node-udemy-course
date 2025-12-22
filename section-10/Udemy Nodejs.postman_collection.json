@@ -76,7 +76,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/tours/6924f9f6e817d3aa603a54bc",
+									"raw": "http://localhost:3000/api/v1/tours/6945d2aa4822aa2faab03001",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -86,7 +86,7 @@
 										"api",
 										"v1",
 										"tours",
-										"6924f9f6e817d3aa603a54bc"
+										"6945d2aa4822aa2faab03001"
 									]
 								}
 							},

@@ -49,6 +49,13 @@ exports.createTour = async (req, res) => {
       data: { tour: newTour },
     });
   } catch (err) {
+    if (err.name === 'ValidationError') {
+      const firstError = Object.values(err.errors)[0].message;
+      return res.status(400).json({
+        status: 'fail',
+        message: firstError
+      });
+    }
     res.status(400).json({
       status: 'fail',
       message: err.message,

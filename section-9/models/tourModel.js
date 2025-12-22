@@ -8,7 +8,12 @@ const tourSchema = new mongoose.Schema({
     required: [true, 'A tour must have a name'],
     unique: true,
     trim: true,
-    validate: [validator.isAlpha, 'Tour name must be string only']
+    validate: {
+      validator: function (value) {
+        return validator.isAlpha(value.replace(/\s/g, ''));
+      },
+      message: 'Tour name must be string'
+    }
   },
   slug: {
      type: String
